@@ -1,3 +1,5 @@
+# NestJS Auth REST API
+
 ## Description
 
 This is a simple project to demonstrate how to use the NestJS framework to create authentication and authorization for a REST API.
