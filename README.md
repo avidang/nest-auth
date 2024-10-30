@@ -7,7 +7,7 @@ This is a simple project to demonstrate how to use the NestJS framework to creat
 ## Project setup
 
 ```bash
-$ pnpm install
+pnpm install
 ```
 
 ## Compile and run the project
