@@ -1,10 +1,9 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
-import { UsersModule } from "src/users/users.module";
-import { AuthController } from "./auth.controller";
-import { JwtModule } from "src/jwt/jwt.module";
-import { GoogleProviderModule } from "./google-provider/google-provider.module";
 import { RouterModule } from "@nestjs/core";
+import { JwtModule } from "src/jwt/jwt.module";
+import { UsersModule } from "src/users/users.module";
+import { GoogleProviderModule } from "./google-provider/google-provider.module";
 
 @Module({
 	imports: [
@@ -13,7 +12,7 @@ import { RouterModule } from "@nestjs/core";
 		GoogleProviderModule,
 		RouterModule.register([{ path: "users", module: UsersModule }]),
 	],
-	controllers: [AuthController],
+	controllers: [],
 	providers: [],
 	exports: [JwtModule],
 })
