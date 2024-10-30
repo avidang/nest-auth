@@ -1,13 +1,11 @@
-import { forwardRef, Module } from "@nestjs/common";
-import { MongooseModule } from "@nestjs/mongoose";
+import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
+import { MongooseModule } from "@nestjs/mongoose";
 import { AppController } from "./app.controller";
 import { AuthModule } from "./auth/auth.module";
-import { JwtModule } from "./jwt/jwt.module";
 
 @Module({
 	imports: [
-		forwardRef(() => JwtModule),
 		ConfigModule.forRoot({ isGlobal: true }),
 		MongooseModule.forRootAsync({
 			imports: [ConfigModule],
