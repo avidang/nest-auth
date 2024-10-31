@@ -20,5 +20,8 @@
     "parser": {
       "unsafeParameterDecoratorsEnabled": true
     }
+  },
+  "files": {
+    "include": ["src/**/*.ts"]
   }
 }
