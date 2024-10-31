@@ -1,4 +1,5 @@
 import {
+	applyDecorators,
 	CanActivate,
 	ExecutionContext,
 	Injectable,
@@ -7,6 +8,7 @@ import {
 } from "@nestjs/common";
 import type { Request } from "express";
 import { JwtService } from "./jwt.service";
+import { ApiBearerAuth } from "@nestjs/swagger";
 
 @Injectable()
 export class JwtGuard implements CanActivate {
@@ -34,4 +36,5 @@ export class JwtGuard implements CanActivate {
 	}
 }
 
-export const Protected = () => UseGuards(JwtGuard);
+export const Protected = () =>
+	applyDecorators(ApiBearerAuth(), UseGuards(JwtGuard));
