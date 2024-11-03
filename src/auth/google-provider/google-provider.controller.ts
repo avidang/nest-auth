@@ -4,7 +4,9 @@ import { GoogleOauthGuard } from "./google-oauth.guard";
 import { GoogleUser } from "./google-user.dto";
 import { JwtService } from "src/jwt/jwt.service";
 import { Public } from "src/config/decorators";
+import { ApiTags } from "@nestjs/swagger";
 
+@ApiTags("auth")
 @Controller("auth/google")
 export class GoogleProviderController {
 	constructor(private jwtService: JwtService) {}

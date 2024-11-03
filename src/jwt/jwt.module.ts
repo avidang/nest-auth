@@ -1,9 +1,10 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { JwtModule as NestJwtModule } from "@nestjs/jwt";
-import { UsersModule } from "src/users/users.module";
+import { UserModule } from "src/user/user.module";
 import { JwtGuard } from "./jwt.guard";
 import { JwtService } from "./jwt.service";
+import { RoleModule } from "src/role/role.module";
 
 @Module({
 	imports: [
@@ -15,7 +16,8 @@ import { JwtService } from "./jwt.service";
 			}),
 			inject: [ConfigService],
 		}),
-		UsersModule,
+		UserModule,
+		RoleModule
 	],
 	providers: [JwtGuard, JwtService],
 	exports: [JwtService],

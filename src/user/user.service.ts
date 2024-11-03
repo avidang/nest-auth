@@ -1,14 +1,19 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
-import { UserByProvider } from "src/users/users.types";
+import { UserByProvider } from "src/user/users.types";
 import { UpdateUserDto } from "./dto/update-user.dto";
-import { User, UserDocument } from "./users.schema";
+import { User, UserDocument } from "./user.schema";
+import { Role } from "src/role/role.schema";
 
 @Injectable()
-export class UsersService {
-	constructor(@InjectModel(User.name) private userModel: Model<User>) {}
+export class UserService {
+	constructor(
+		@InjectModel(User.name) private userModel: Model<User>,
+		@InjectModel(Role.name) private roleModel: Model<Role>,
+	) {}
 
+	// User methods
 	async create(user: UserByProvider): Promise<UserDocument> {
 		const createdUser = new this.userModel({
 			firstName: user.firstName,
@@ -32,11 +37,11 @@ export class UsersService {
 	}
 
 	async findAll(): Promise<User[]> {
-		return this.userModel.find().exec();
+		return this.userModel.find().populate("roles").exec();
 	}
 
 	async findOne(id: string): Promise<UserDocument | null> {
-		return this.userModel.findById(id).exec();
+		return this.userModel.findById(id).populate("roles").exec();
 	}
 
 	async findOneByEmail(email: string): Promise<UserDocument | null> {
@@ -64,5 +69,27 @@ export class UsersService {
 		id: string,
 	): Promise<UserDocument | null> {
 		return this.userModel.findOne({ [`providers.${name}.id`]: id }).exec();
+	}
+
+	// Role methods
+	async assignRole(
+		userId: string,
+		roleId: string,
+	): Promise<UserDocument | null> {
+		const user = await this.userModel.findById(userId).exec();
+		if (!user) throw new Error("User not found");
+
+		const role = await this.roleModel.findById(roleId).exec();
+		if (!role) throw new Error("Role not found");
+
+		user.roles.push(role);
+		return user.save();
+	}
+
+	async getRoles(userId: string): Promise<Role[]> {
+		const user = await this.userModel.findById(userId).populate("roles").exec();
+		if (!user) throw new Error("User not found");
+
+		return user.roles;
 	}
 }

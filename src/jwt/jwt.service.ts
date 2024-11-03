@@ -1,13 +1,13 @@
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { JwtService as NestJwtService } from "@nestjs/jwt";
-import { UsersService } from "src/users/users.service";
-import { UserByProvider } from "src/users/users.types";
+import { UserService } from "src/user/user.service";
+import { UserByProvider } from "src/user/users.types";
 
 @Injectable()
 export class JwtService {
 	constructor(
 		public readonly jwt: NestJwtService,
-		private userService: UsersService,
+		private userService: UserService,
 	) {}
 
 	async loginWithProvider(data: UserByProvider) {

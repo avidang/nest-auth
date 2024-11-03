@@ -1,4 +1,4 @@
-import { UserDocument } from "src/users/users.schema";
+import { UserDocument } from "src/user/user.schema";
 
 export type UserByProvider = {
 	firstName: string;
