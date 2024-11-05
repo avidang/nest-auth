@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { PermissionList } from "../permissions/permission.type";
+import { Permission } from "../permissions/permission.type";
 
 export class UpdateRoleDto {
 	@ApiProperty()
@@ -11,5 +11,5 @@ export class UpdateRoleDto {
 	@ApiProperty({
 		type: [{ label: { type: "string" }, description: { type: "string" } }],
 	})
-	permissions: PermissionList;
+	permissions: Permission[];
 }

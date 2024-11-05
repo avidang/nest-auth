@@ -9,7 +9,7 @@ import {
 } from "@nestjs/common";
 import { UserService } from "src/user/user.service";
 import { Reflector } from "@nestjs/core";
-import { Permissions } from "./permission.type";
+import { Permission } from "./permission.type";
 
 @Injectable()
 export class PermissionGuard implements CanActivate {
@@ -21,7 +21,7 @@ export class PermissionGuard implements CanActivate {
 		const requiredPermissions = this.reflector.get<string[]>(
 			"permissions",
 			context.getHandler(),
-		) as Permissions[];
+		) as Permission[];
 
 		if (!requiredPermissions)
 			throw new UnauthorizedException("No permissions provided");
@@ -30,7 +30,7 @@ export class PermissionGuard implements CanActivate {
 		const userRoles = await this.userService.getRoles(request.userId);
 
 		const userPermissions = userRoles.flatMap((role) =>
-			role.permissions.map((permission) => permission.label),
+			role.permissions.map((permission) => permission),
 		);
 		const hasPermission = requiredPermissions.every((permission) =>
 			userPermissions.includes(permission),
@@ -47,7 +47,7 @@ export class PermissionGuard implements CanActivate {
 	}
 }
 
-export const RequiredPermissions = (...permissions: Permissions[]) =>
+export const RequiredPermissions = (...permissions: Permission[]) =>
 	applyDecorators(
 		SetMetadata("permissions", permissions),
 		UseGuards(PermissionGuard),
