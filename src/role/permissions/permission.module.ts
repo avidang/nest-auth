@@ -1,10 +1,9 @@
 import { Module } from "@nestjs/common";
-import { PermissionGuard } from "./permission.guard";
 
 @Module({
 	imports: [],
 	controllers: [],
-	providers: [PermissionGuard],
+	providers: [],
 	exports: [],
 })
 export class PermissionModule {}
