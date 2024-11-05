@@ -7,7 +7,7 @@ import { Public } from "src/config/decorators";
 import { ApiTags } from "@nestjs/swagger";
 
 @ApiTags("auth")
-@Controller("auth/google")
+@Controller()
 export class GoogleProviderController {
 	constructor(private jwtService: JwtService) {}
 

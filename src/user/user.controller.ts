@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Put, Req } from "@nestjs/common";
+import {
+	Body,
+	Controller,
+	Delete,
+	Get,
+	Param,
+	Patch,
+	Post,
+	Req,
+} from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { Request } from "express";
 import { UpdateUserDto } from "./dto/update-user.dto";
@@ -7,6 +16,7 @@ import { UserService } from "./user.service";
 import { Protected } from "src/jwt/jwt.guard";
 import { RequiredPermissions } from "src/role/permissions/permission.guard";
 import { userPermissions } from "./user.permission";
+import { AssignRoleDto } from "./dto/assign-role.dto";
 
 @ApiTags("users")
 @Controller()
@@ -30,14 +40,14 @@ export class UserController {
 		return this.userService.findOne(request.userId);
 	}
 
-	@Get(":id")
+	@Get("user/:id")
 	@RequiredPermissions(userPermissions.USER_READ)
 	@Protected()
 	async findOne(@Param("id") id: string): Promise<UserDocument | null> {
 		return this.userService.findOne(id);
 	}
 
-	@Put(":id")
+	@Patch("user/:id")
 	@RequiredPermissions(userPermissions.USER_UPDATE)
 	@Protected()
 	async update(
@@ -47,7 +57,7 @@ export class UserController {
 		return this.userService.update(id, updateUserDto);
 	}
 
-	@Delete(":id")
+	@Delete("user/:id")
 	@RequiredPermissions(userPermissions.USER_DELETE)
 	@Protected()
 	async remove(@Param("id") id: string): Promise<UserDocument | null> {
@@ -55,13 +65,12 @@ export class UserController {
 	}
 
 	// Role endpoints
-	@Put(":id/roles/:roleId/assign")
+	@Post("assign-role")
 	@RequiredPermissions(userPermissions.USER_ASSIGN_ROLE)
 	@Protected()
 	async assignRole(
-		@Param("id") id: string,
-		@Param("roleId") roleId: string,
+		@Body() { userId, roleId }: AssignRoleDto,
 	): Promise<UserDocument | null> {
-		return this.userService.assignRole(id, roleId);
+		return this.userService.assignRole(userId, roleId);
 	}
 }

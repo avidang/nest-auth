@@ -3,6 +3,9 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { MongooseModule } from "@nestjs/mongoose";
 import { AppController } from "./app.controller";
 import { AuthModule } from "./auth/auth.module";
+import { UserModule } from "./user/user.module";
+import { RoleModule } from "./role/role.module";
+import { RouterModule } from "@nestjs/core";
 
 @Module({
 	imports: [
@@ -15,6 +18,10 @@ import { AuthModule } from "./auth/auth.module";
 			inject: [ConfigService],
 		}),
 		AuthModule,
+		RouterModule.register([
+			{ path: "/users", module: UserModule },
+			{ path: "/roles", module: RoleModule },
+		]),
 	],
 	controllers: [AppController],
 	providers: [],
