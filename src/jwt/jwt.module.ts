@@ -4,7 +4,6 @@ import { JwtModule as NestJwtModule } from "@nestjs/jwt";
 import { UserModule } from "src/user/user.module";
 import { JwtGuard } from "./jwt.guard";
 import { JwtService } from "./jwt.service";
-import { RoleModule } from "src/role/role.module";
 
 @Module({
 	imports: [
@@ -17,7 +16,6 @@ import { RoleModule } from "src/role/role.module";
 			inject: [ConfigService],
 		}),
 		UserModule,
-		RoleModule
 	],
 	providers: [JwtGuard, JwtService],
 	exports: [JwtService],
