@@ -1,10 +1,8 @@
 import {
 	Body,
 	Controller,
-	Delete,
 	Get,
 	Param,
-	Patch,
 	Post,
 	Req,
 } from "@nestjs/common";
@@ -47,7 +45,7 @@ export class UserController {
 		return this.userService.findOne(id);
 	}
 
-	@Patch("user/:id")
+	@Post("user/:id/update")
 	@RequiredPermissions(userPermissions.USER_UPDATE)
 	@Protected()
 	async update(
@@ -57,7 +55,7 @@ export class UserController {
 		return this.userService.update(id, updateUserDto);
 	}
 
-	@Delete("user/:id")
+	@Post("user/:id/delete")
 	@RequiredPermissions(userPermissions.USER_DELETE)
 	@Protected()
 	async remove(@Param("id") id: string): Promise<UserDocument | null> {
