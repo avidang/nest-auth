@@ -8,7 +8,7 @@
     "rules": {
       "recommended": true,
       "correctness": {
-        "noUnusedImports": "error"
+        "all": true
       },
       "complexity": {
         "useLiteralKeys": "off"

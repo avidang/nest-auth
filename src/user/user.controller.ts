@@ -30,7 +30,7 @@ export class UserController {
 	}
 
 	@Get("me")
-	@RequiredPermissions(userPermissions.USER_READ)
+	@RequiredPermissions(userPermissions.USER_READ, "user:delete")
 	@Protected()
 	async me(
 		@Req() request: Request & { userId: string },

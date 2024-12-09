@@ -8,22 +8,23 @@ import { RoleModule } from "./role/role.module";
 import { RouterModule } from "@nestjs/core";
 
 @Module({
-	imports: [
-		ConfigModule.forRoot({ isGlobal: true }),
-		MongooseModule.forRootAsync({
-			imports: [ConfigModule],
-			useFactory: async (configService: ConfigService) => ({
-				uri: configService.get<string>("MONGODB_URI"),
-			}),
-			inject: [ConfigService],
-		}),
-		AuthModule,
-		RouterModule.register([
-			{ path: "/users", module: UserModule },
-			{ path: "/roles", module: RoleModule },
-		]),
-	],
-	controllers: [AppController],
-	providers: [],
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.get<string>("MONGODB_URI"),
+      }),
+      inject: [ConfigService],
+    }),
+    AuthModule,
+    RoleModule,
+    RouterModule.register([
+      { path: "/users", module: UserModule },
+      { path: "/roles", module: RoleModule },
+    ]),
+  ],
+  controllers: [AppController],
+  providers: [],
 })
 export class AppModule {}
